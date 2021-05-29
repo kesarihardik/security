@@ -1,3 +1,7 @@
+
+//Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env
+require('dotenv').config(); 
+
 const express = require('express');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
@@ -18,9 +22,8 @@ const userSchema = new mongoose.Schema({
 });
 
 
-//encrypting password using secret string
-const secret = "Thisisoursecret";
-userSchema.plugin(encrypt, { secret: secret,encryptedFields:['password']});
+//encrypting password
+userSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields:['password']});
 
 const User = mongoose.model('User',userSchema);
 
